@@ -10,10 +10,12 @@ public interface UserService {
 
     UserDto registerUser(RegisterRequest request);
 
+    UserDto getUserById(Long userId);
 
 
+    UserDto getUserByUsername(String username);
 
-//    UserDto getUserById(Long id);
+
 //    UserDto getUserByEmail(String email);
 //    UserDto updateUser(Long id, UpdateUserRequest request);
 

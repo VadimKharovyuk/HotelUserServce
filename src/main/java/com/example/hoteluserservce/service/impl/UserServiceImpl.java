@@ -12,6 +12,7 @@ import com.example.hoteluserservce.service.UserService;
 import com.example.hoteluserservce.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -77,6 +78,46 @@ public class UserServiceImpl implements UserService {
             log.error("Unexpected error during registration for email {}: {}",
                     request.getEmail(), e.getMessage(), e);
             throw new RuntimeException("Ошибка регистрации пользователя", e);
+        }
+    }
+
+    @Override
+    public UserDto getUserById(Long userId) {
+        log.info("Getting user by ID: {}", userId);
+
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+
+            log.info("User found: {}", user.getEmail());
+            return userMapper.toUserDto(user);
+
+        } catch (UsernameNotFoundException e) {
+            log.error("User not found with ID: {}", userId);
+            throw e;
+        } catch (Exception e) {
+            log.error("Unexpected error getting user {}: {}", userId, e.getMessage(), e);
+            throw new RuntimeException("Ошибка получения пользователя", e);
+        }
+    }
+
+    @Override
+    public UserDto getUserByUsername(String username) {
+        log.info("Getting user by username: {}", username);
+
+        try {
+            User user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден"));
+
+            log.info("User found: {} ({})", user.getUsername(), user.getEmail());
+            return userMapper.toUserDto(user);
+
+        } catch (UsernameNotFoundException e) {
+            log.error("User not found with username: {}", username);
+            throw e;
+        } catch (Exception e) {
+            log.error("Unexpected error getting user {}: {}", username, e.getMessage(), e);
+            throw new RuntimeException("Ошибка получения пользователя", e);
         }
     }
 
