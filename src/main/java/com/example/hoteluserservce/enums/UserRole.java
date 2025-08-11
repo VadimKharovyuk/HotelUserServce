@@ -4,9 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum UserRole {
-    GUEST("Обычный гость"),
-    HOTEL_OWNER("Владелец отеля"),
-    ADMIN("Администратор системы");
+    USER("Клиент отеля"),              // Зарегистрированные клиенты
+    HOTEL_OWNER("Владелец отеля"),     // Добавляют/управляют отелями
+    ADMIN("Администратор системы");    // Полный доступ к системе
 
     private final String description;
 

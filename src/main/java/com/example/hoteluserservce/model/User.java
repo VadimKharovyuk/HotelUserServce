@@ -40,7 +40,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserRole role = UserRole.GUEST;
+    private UserRole role = UserRole.USER;
 
 
     @Column(name = "email_verified")
