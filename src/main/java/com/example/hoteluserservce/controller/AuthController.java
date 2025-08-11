@@ -1,9 +1,6 @@
 package com.example.hoteluserservce.controller;
 
-import com.example.hoteluserservce.dto.AuthResponse;
-import com.example.hoteluserservce.dto.LoginRequest;
-import com.example.hoteluserservce.dto.RegisterRequest;
-import com.example.hoteluserservce.dto.UserDto;
+import com.example.hoteluserservce.dto.*;
 import com.example.hoteluserservce.exception.UserAlreadyExistsException;
 import com.example.hoteluserservce.service.AuthService;
 import com.example.hoteluserservce.service.UserService;
@@ -96,38 +93,19 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
+        try {
+            AuthResponse response = authService.refreshToken(request);
+            return ResponseEntity.ok(response);
+        } catch (IllegalArgumentException e) {
+            return createErrorResponse(HttpStatus.UNAUTHORIZED, "Недействительный токен", e.getMessage());
+        } catch (Exception e) {
+            return createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка сервера", "Попробуйте позже");
+        }
+    }
 
 
-
-//    /**
-//     * Проверка доступности email
-//     */
-//    @GetMapping("/check-email")
-//    public ResponseEntity<Map<String, Object>> checkEmailAvailability(@RequestParam String email) {
-//        // Этот метод нужно добавить в UserService
-//        boolean isAvailable = !userService.existsByEmail(email);
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("email", email);
-//        response.put("available", isAvailable);
-//
-//        return ResponseEntity.ok(response);
-//    }
-
-//    /**
-//     * Проверка доступности username
-//     */
-//    @GetMapping("/check-username")
-//    public ResponseEntity<Map<String, Object>> checkUsernameAvailability(@RequestParam String username) {
-//        // Этот метод нужно добавить в UserService
-//        boolean isAvailable = !userService.existsByUsername(username);
-//
-//        Map<String, Object> response = new HashMap<>();
-//        response.put("username", username);
-//        response.put("available", isAvailable);
-//
-//        return ResponseEntity.ok(response);
-//    }
 
     /**
      * Создание ответа с ошибкой
