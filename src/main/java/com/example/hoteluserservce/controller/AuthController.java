@@ -7,6 +7,7 @@ import com.example.hoteluserservce.dto.UserDto;
 import com.example.hoteluserservce.exception.UserAlreadyExistsException;
 import com.example.hoteluserservce.service.AuthService;
 import com.example.hoteluserservce.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -94,6 +95,9 @@ public class AuthController {
                     "Внутренняя ошибка сервера", "Попробуйте позже");
         }
     }
+
+
+
 
 //    /**
 //     * Проверка доступности email
