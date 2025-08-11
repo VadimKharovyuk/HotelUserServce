@@ -1,4 +1,4 @@
-package com.example.hoteluserservce.dto;
+package com.example.hoteluserservce.dto.user;
 
 
 import com.example.hoteluserservce.enums.UserRole;

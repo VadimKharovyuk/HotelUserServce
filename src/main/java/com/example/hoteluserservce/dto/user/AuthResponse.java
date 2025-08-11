@@ -1,10 +1,8 @@
-package com.example.hoteluserservce.dto;
+package com.example.hoteluserservce.dto.user;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Builder

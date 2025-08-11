@@ -1,6 +1,6 @@
 package com.example.hoteluserservce.mapper;
 
-import com.example.hoteluserservce.dto.UserDto;
+import com.example.hoteluserservce.dto.user.UserDto;
 import com.example.hoteluserservce.model.User;
 import org.springframework.stereotype.Component;
 

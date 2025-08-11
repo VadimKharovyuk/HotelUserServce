@@ -1,7 +1,7 @@
 package com.example.hoteluserservce.service.impl;
 
-import com.example.hoteluserservce.dto.RegisterRequest;
-import com.example.hoteluserservce.dto.UserDto;
+import com.example.hoteluserservce.dto.user.RegisterRequest;
+import com.example.hoteluserservce.dto.user.UserDto;
 import com.example.hoteluserservce.enums.UserRole;
 import com.example.hoteluserservce.exception.UserAlreadyExistsException;
 import com.example.hoteluserservce.mapper.UserMapper;

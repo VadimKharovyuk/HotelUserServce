@@ -1,15 +1,14 @@
 package com.example.hoteluserservce.service.impl;
 
-import com.example.hoteluserservce.dto.AuthResponse;
-import com.example.hoteluserservce.dto.LoginRequest;
-import com.example.hoteluserservce.dto.RefreshTokenRequest;
+import com.example.hoteluserservce.dto.user.AuthResponse;
+import com.example.hoteluserservce.dto.user.LoginRequest;
+import com.example.hoteluserservce.dto.user.RefreshTokenRequest;
 import com.example.hoteluserservce.mapper.UserMapper;
 import com.example.hoteluserservce.model.RefreshToken;
 import com.example.hoteluserservce.model.User;
 import com.example.hoteluserservce.repository.RefreshTokenRepository;
 import com.example.hoteluserservce.repository.UserRepository;
 import com.example.hoteluserservce.service.AuthService;
-import com.example.hoteluserservce.service.UserService;
 import com.example.hoteluserservce.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

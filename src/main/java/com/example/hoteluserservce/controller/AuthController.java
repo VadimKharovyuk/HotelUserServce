@@ -1,10 +1,9 @@
 package com.example.hoteluserservce.controller;
 
-import com.example.hoteluserservce.dto.*;
+import com.example.hoteluserservce.dto.user.*;
 import com.example.hoteluserservce.exception.UserAlreadyExistsException;
 import com.example.hoteluserservce.service.AuthService;
 import com.example.hoteluserservce.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

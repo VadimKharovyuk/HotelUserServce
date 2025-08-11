@@ -1,8 +1,8 @@
 package com.example.hoteluserservce.service;
 
-import com.example.hoteluserservce.dto.AuthResponse;
-import com.example.hoteluserservce.dto.LoginRequest;
-import com.example.hoteluserservce.dto.RefreshTokenRequest;
+import com.example.hoteluserservce.dto.user.AuthResponse;
+import com.example.hoteluserservce.dto.user.LoginRequest;
+import com.example.hoteluserservce.dto.user.RefreshTokenRequest;
 
 import javax.security.auth.login.AccountLockedException;
 
