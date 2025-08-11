@@ -106,6 +106,15 @@ public class AuthController {
     }
 
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody RefreshTokenRequest request) {
+        try {
+            authService.logout(request.getRefreshToken());
+            return ResponseEntity.ok(Map.of("message", "Успешный выход"));
+        } catch (Exception e) {
+            return createErrorResponse(HttpStatus.BAD_REQUEST, "Ошибка выхода", e.getMessage());
+        }
+    }
 
     /**
      * Создание ответа с ошибкой

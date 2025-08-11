@@ -12,6 +12,8 @@ public interface AuthService {
 
 
     AuthResponse refreshToken(RefreshTokenRequest request) throws AccountLockedException;
-//   void logout(String refreshToken);
-//   void logoutAll(Long userId);
+
+
+   void logout(String refreshToken);
+
 }

@@ -178,4 +178,29 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Ошибка обновления токена", e);
         }
     }
+
+    @Override
+    @Transactional
+    public void logout(String refreshToken) {
+        log.info("Attempting to logout with refresh token");
+
+        try {
+            // Найти и отозвать refresh token
+            RefreshToken tokenEntity = tokenRepository.findByToken(refreshToken)
+                    .orElseThrow(() -> new IllegalArgumentException("Недействительный refresh token"));
+
+            if (!tokenEntity.isRevoked()) {
+                tokenEntity.setRevoked(true);
+                tokenRepository.save(tokenEntity);
+                log.info("User logged out successfully from single device");
+            } else {
+                log.warn("Attempt to logout with already revoked token");
+                throw new IllegalArgumentException("Токен уже отозван");
+            }
+
+        } catch (Exception e) {
+            log.error("Error during logout: {}", e.getMessage());
+            throw new RuntimeException("Ошибка при выходе", e);
+        }
+    }
 }
