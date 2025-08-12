@@ -134,8 +134,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Имя пользователя обязательно для заполнения");
         }
 
-        if (request.getPassword() == null || request.getPassword().length() < 8) {
-            throw new IllegalArgumentException("Пароль должен содержать минимум 8 символов");
+        if (request.getPassword() == null || request.getPassword().length() < 6) {
+            throw new IllegalArgumentException("Пароль должен содержать минимум 6 символов");
         }
 
         // Проверка на валидность email
