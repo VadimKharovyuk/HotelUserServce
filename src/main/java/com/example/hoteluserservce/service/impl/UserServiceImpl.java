@@ -1,9 +1,12 @@
 package com.example.hoteluserservce.service.impl;
 
 import com.example.hoteluserservce.dto.user.RegisterRequest;
+import com.example.hoteluserservce.dto.user.UpdateUserDto;
 import com.example.hoteluserservce.dto.user.UserDto;
 import com.example.hoteluserservce.enums.UserRole;
+import com.example.hoteluserservce.exception.EmailAlreadyExistsException;
 import com.example.hoteluserservce.exception.UserAlreadyExistsException;
+import com.example.hoteluserservce.exception.UserNotFoundException;
 import com.example.hoteluserservce.mapper.UserMapper;
 import com.example.hoteluserservce.model.User;
 import com.example.hoteluserservce.repository.RefreshTokenRepository;
@@ -119,6 +122,33 @@ public class UserServiceImpl implements UserService {
             log.error("Unexpected error getting user {}: {}", username, e.getMessage(), e);
             throw new RuntimeException("Ошибка получения пользователя", e);
         }
+    }
+
+    @Override
+    @Transactional
+    public UserDto updateUser(Long userId, UpdateUserDto updateDto) {
+        // ✅ Находим существующего пользователя
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+
+        // ✅ Проверяем уникальность email при его изменении
+        if (updateDto.getEmail() != null &&
+                !updateDto.getEmail().equals(existingUser.getEmail())) {
+
+            if (userRepository.existsByEmail(updateDto.getEmail())) {
+                throw new EmailAlreadyExistsException("Email already exists: " + updateDto.getEmail());
+            }
+
+            // ✅ Сбрасываем верификацию при смене email
+            existingUser.setEmailVerified(false);
+        }
+
+        // ✅ Обновляем только переданные поля
+        userMapper.updateUserFromDto(existingUser, updateDto);
+
+        // ✅ Сохраняем и возвращаем DTO
+        User updatedUser = userRepository.save(existingUser);
+        return userMapper.toUserDto(updatedUser);
     }
 
     private void validateRegisterRequest(RegisterRequest request) {
