@@ -18,6 +18,8 @@ public class UserController {
 
     private final UserService userService;
 
+
+    // ✅ Для текущего пользователя - через Authentication (токен)
     @GetMapping("/profile")
     public ResponseEntity<UserDto> getProfile(Authentication authentication) {
         String username = authentication.getName();
@@ -25,11 +27,18 @@ public class UserController {
         return ResponseEntity.ok(profile);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(
-            @PathVariable Long id,
+    @PutMapping("/profile")
+    public ResponseEntity<UserDto> updateProfile(
+            Authentication authentication,
             @Valid @RequestBody UpdateUserDto updateDto) {
-        UserDto updatedUser = userService.updateUser(id, updateDto);
+        String username = authentication.getName();
+        UserDto updatedUser = userService.updateUserByUsername(username, updateDto);
         return ResponseEntity.ok(updatedUser);
     }
+
+
+
+
+
+
 }

@@ -16,11 +16,9 @@ public interface UserService {
 
     UserDto getUserByUsername(String username);
 
-    UserDto updateUser(Long userId, UpdateUserDto updateDto);
+    UserDto updateUserByUsername(String username, UpdateUserDto updateDto);
 
 
-//    UserDto getUserByEmail(String email);
-//    UserDto updateUser(Long id, UpdateUserRequest request);
 
 
 

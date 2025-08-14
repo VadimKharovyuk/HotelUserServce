@@ -126,12 +126,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDto updateUser(Long userId, UpdateUserDto updateDto) {
-        // ✅ Находим существующего пользователя
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+    public UserDto updateUserByUsername(String username, UpdateUserDto updateDto) {
+        User existingUser = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User not found with username: " + username));
 
-        // ✅ Проверяем уникальность email при его изменении
+        // Проверяем только email на уникальность
         if (updateDto.getEmail() != null &&
                 !updateDto.getEmail().equals(existingUser.getEmail())) {
 
@@ -139,14 +138,11 @@ public class UserServiceImpl implements UserService {
                 throw new EmailAlreadyExistsException("Email already exists: " + updateDto.getEmail());
             }
 
-            // ✅ Сбрасываем верификацию при смене email
             existingUser.setEmailVerified(false);
         }
 
-        // ✅ Обновляем только переданные поля
         userMapper.updateUserFromDto(existingUser, updateDto);
 
-        // ✅ Сохраняем и возвращаем DTO
         User updatedUser = userRepository.save(existingUser);
         return userMapper.toUserDto(updatedUser);
     }
