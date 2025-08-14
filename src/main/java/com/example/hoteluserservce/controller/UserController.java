@@ -6,6 +6,8 @@ import com.example.hoteluserservce.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,16 +16,28 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final UserService userService;
 
 
-    // ✅ Для текущего пользователя - через Authentication (токен)
+    @Value("${server.port:1511}")
+    private String serverPort;
+
+
     @GetMapping("/profile")
-    public ResponseEntity<UserDto> getProfile(Authentication authentication) {
+    public ResponseEntity<UserDto> getProfile(Authentication authentication, HttpServletRequest request) {
         String username = authentication.getName();
+
+        log.info("🎯 [ОТВЕЧАЕТ ПОРТ-{}] Profile request for user: {}",
+                serverPort, username);
+
         UserDto profile = userService.getUserByUsername(username);
+
+        log.info("✅ [ОТВЕЧАЕТ ПОРТ-{}] Profile successfully returned for user: {} (ID: {})",
+                serverPort, username, profile.getId());
+
         return ResponseEntity.ok(profile);
     }
 
